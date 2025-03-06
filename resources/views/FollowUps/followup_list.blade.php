@@ -41,8 +41,8 @@
                             <div class="col-md-12">
                                 <h1 class="mb-4 text-left">Follow Ups List</h1>
                                 <div class="mb-3 text-left">
-                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Home</a>
-                                    <!-- Back button -->
+                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">Home</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
 

@@ -8,12 +8,13 @@
             font-weight: bold;
             font-color: black;
         }
+
         .card-body {
-    height: 15vh;
-    flex: 1 1 auto;
-    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
-    color: var(--bs-card-color);
-}
+            height: 15vh;
+            flex: 1 1 auto;
+            padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+            color: var(--bs-card-color);
+        }
     </style>
     <!--start page wrapper -->
     <div class="page-wrapper">
@@ -29,6 +30,64 @@
         @endif
         <div class="page-content">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-3">
+                {{-- Today's Follow Ups --}}
+                <a href="{{ route('enquiryList', ['today_follow_ups' => 'today']) }}" class="text-decoration-none">
+                    <div class="col">
+                        <div class="card radius-10 border-start border-4 border-secondary">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary">Today Follow Ups</p>
+                                        <h4 class="my-1 text-secondary">{{ $todayFollowUpsCount }}</h4>
+                                    </div>
+                                    <div class="widgets-icons-2 rounded-circle ms-auto"
+                                        style="background-color: #6C63FF; color: #fff; padding: 15px;">
+                                        <i class="fa-solid fa-calendar-day"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                 {{-- Pending --}}
+                 <a href="{{ route('enquiry.list', ['status' => 'Pending']) }}" class="text-decoration-none">
+                    <div class="col">
+                        <div class="card radius-10 border-start border-4 border-warning">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary">Pending</p>
+                                        <h4 class="my-1 text-warning">{{ $pendingCount }}</h4>
+                                    </div>
+                                    <div class="text-white widgets-icons-2 rounded-circle bg-gradient-orange ms-auto">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                {{-- Request Call Back --}}
+                <a href="{{ route('enquiry.list', ['status' => 'Request Call Back']) }}" class="text-decoration-none">
+                    <div class="col">
+                        <div class="card radius-10 border-start border-4 border-info">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary">Request Call Back</p>
+                                        <h4 class="my-1 text-info">{{ $requestCallBackCount }}</h4>
+                                    </div>
+                                    <div class="text-white widgets-icons-2 rounded-circle bg-gradient-blues ms-auto">
+                                        <i class="fa-solid fa-phone-volume"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
                 {{-- Cancelled --}}
                 <a href="{{ route('enquiry.list', ['status' => 'Cancelled']) }}" class="text-decoration-none">
                     <div class="col">
@@ -68,7 +127,8 @@
                 </a>
 
                 {{-- Job/Internship --}}
-                <a href="{{ route('enquiryList', ['status' => urlencode('Job/Internship')]) }}" class="text-decoration-none">
+                <a href="{{ route('enquiryList', ['status' => urlencode('Job/Internship')]) }}"
+                    class="text-decoration-none">
                     <div class="col">
                         <div class="card radius-10 border-start border-4 border-info">
                             <div class="card-body">
@@ -85,7 +145,6 @@
                         </div>
                     </div>
                 </a>
-
 
                 {{-- Marketing --}}
                 <a href="{{ route('enquiry.list', ['status' => 'Marketing']) }}" class="text-decoration-none">
@@ -125,25 +184,6 @@
                     </div>
                 </a>
 
-                {{-- Pending --}}
-                <a href="{{ route('enquiry.list', ['status' => 'Pending']) }}" class="text-decoration-none">
-                    <div class="col">
-                        <div class="card radius-10 border-start border-4 border-warning">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <p class="mb-0 text-secondary">Pending</p>
-                                        <h4 class="my-1 text-warning">{{ $pendingCount }}</h4>
-                                    </div>
-                                    <div class="text-white widgets-icons-2 rounded-circle bg-gradient-orange ms-auto">
-                                        <i class="fa-solid fa-clock"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
                 {{-- Purposal Send --}}
                 <a href="{{ route('enquiry.list', ['status' => 'Purposal Send']) }}" class="text-decoration-none">
                     <div class="col">
@@ -173,7 +213,8 @@
                                         <p class="mb-0 text-secondary">Rejected</p>
                                         <h4 class="my-1 text-dark">{{ $rejectedCount }}</h4>
                                     </div>
-                                    <div class="widgets-icons-2 rounded-circle ms-auto" style="background-color: #FF6347; padding: 15px;">
+                                    <div class="widgets-icons-2 rounded-circle ms-auto"
+                                        style="background-color: #FF6347; padding: 15px;">
                                         <i class="fa-solid fa-thumbs-down" style="color: #FFFFFF;"></i>
                                     </div>
                                 </div>
@@ -181,7 +222,6 @@
                         </div>
                     </div>
                 </a>
-
 
                 {{-- Won --}}
                 <a href="{{ route('enquiry.list', ['status' => 'Won']) }}" class="text-decoration-none">
@@ -203,36 +243,18 @@
                 </a>
 
                 {{-- Wrong Category --}}
-               <a href="{{ route('enquiry.list', ['status' => 'Wrong Category']) }}" class="text-decoration-none">
-    <div class="col">
-        <div class="card radius-10 border-start border-4 border-secondary">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <p class="mb-0 text-secondary">Wrong Category</p>
-                        <h4 class="my-1 text-secondary">{{ $wrongCategoryCount }}</h4>
-                    </div>
-                    <div class="widgets-icons-2 rounded-circle ms-auto" style="background-color: #dc3545; color: #fff; padding: 15px;">
-                       <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</a>
-
-                {{-- Request Call Back --}}
-                <a href="{{ route('enquiry.list', ['status' => 'Request Call Back']) }}" class="text-decoration-none">
+                <a href="{{ route('enquiry.list', ['status' => 'Wrong Category']) }}" class="text-decoration-none">
                     <div class="col">
-                        <div class="card radius-10 border-start border-4 border-info">
+                        <div class="card radius-10 border-start border-4 border-secondary">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <p class="mb-0 text-secondary">Request Call Back</p>
-                                        <h4 class="my-1 text-info">{{ $requestCallBackCount }}</h4>
+                                        <p class="mb-0 text-secondary">Wrong Category</p>
+                                        <h4 class="my-1 text-secondary">{{ $wrongCategoryCount }}</h4>
                                     </div>
-                                    <div class="text-white widgets-icons-2 rounded-circle bg-gradient-blues ms-auto">
-                                        <i class="fa-solid fa-phone-volume"></i>
+                                    <div class="widgets-icons-2 rounded-circle ms-auto"
+                                        style="background-color: #dc3545; color: #fff; padding: 15px;">
+                                        <i class="fas fa-exclamation-triangle"></i>
                                     </div>
                                 </div>
                             </div>
@@ -250,27 +272,9 @@
                                         <p class="mb-0 text-secondary">Total Leads</p>
                                         <h4 class="my-1 text-secondary">{{ $totalLeadsCount }}</h4>
                                     </div>
-                                    <div class="widgets-icons-2 rounded-circle ms-auto" style="background-color: #6C63FF; color: #fff; padding: 15px;">
+                                    <div class="widgets-icons-2 rounded-circle ms-auto"
+                                        style="background-color: #6C63FF; color: #fff; padding: 15px;">
                                         <i class="fa-solid fa-list"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- Today's Follow Ups --}}
-                <a href="{{ route('enquiryList', ['today_follow_ups' => 'today']) }}" class="text-decoration-none">
-                    <div class="col">
-                        <div class="card radius-10 border-start border-4 border-secondary">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <p class="mb-0 text-secondary">Today Follow Ups</p>
-                                        <h4 class="my-1 text-secondary">{{ $todayFollowUpsCount }}</h4>
-                                    </div>
-                                    <div class="widgets-icons-2 rounded-circle ms-auto" style="background-color: #6C63FF; color: #fff; padding: 15px;">
-                                        <i class="fa-solid fa-calendar-day"></i>
                                     </div>
                                 </div>
                             </div>

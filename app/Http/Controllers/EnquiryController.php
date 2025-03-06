@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewLeadNotification;
 use App\Models\EnquiryInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EnquiryController extends Controller
 {
@@ -45,6 +47,9 @@ class EnquiryController extends Controller
 
         // Create record
         $enquiry = EnquiryInfo::create($request->query());
+
+        //Send email notification
+        Mail::to('idigipie@gmail.com')->send(new NewLeadNotification($enquiry));
 
         return response()->json([
             'message' => 'Lead stored successfully!',

@@ -15,27 +15,47 @@
             padding-left: 1rem !important;
             margin-right: auto;
         }
-        .d-flex {
-    position: relative; /* Ensure the parent is positioned */
-}
 
-.test {
-    position: absolute;
-    right: 15px;
-    top: 9px;
-    z-index: 1;
-}
-@media only screen and (max-width: 600px) {
-    .ps-3 {
-    padding-left: 1rem !important;
-    width: 100%;
-}
-.mb-3.page-breadcrumb.d-sm-flex.align-items-center {
-    display: flex
-;
-    align-items: center;
-}
-}
+        .d-flex {
+            position: relative;
+            /* Ensure the parent is positioned */
+        }
+
+        .test {
+            position: absolute;
+            right: 15px;
+            top: 9px;
+            z-index: 1;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .ps-3 {
+                padding-left: 1rem !important;
+                width: 100%;
+            }
+
+            .mb-3.page-breadcrumb.d-sm-flex.align-items-center {
+                display: flex;
+                align-items: center;
+            }
+
+            /* Center modal only in landscape mode */
+
+
+        }
+
+        @media (orientation: landscape) {
+            .modal-dialog {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                /* Full viewport height */
+                margin: 0 auto;
+                max-width: 100% !important;
+                /* Adjust modal width as needed */
+            }
+        }
     </style>
 </head>
 
@@ -85,103 +105,104 @@
                             </div>
                         </div>
                         <div class="card">
-                        <div class="card-body">
+                            <div class="card-body">
 
 
-                            <div class="table-responsive">
-                                <div class="d-flex justify-content-between mb-3 test1">
-                                    <div class="test">
-                                        <label for="dateFilter">Filter by Date:</label>
-                                        <select id="dateFilter" class="form-control">
-                                            <option value="all">All</option>
-                                            <option value="today">Today</option>
-                                            <option value="yesterday">Yesterday</option>
-                                            <option value="week">This Week</option>
-                                            <option value="month">This Month</option>
-                                            <option value="year">This Year</option>
-                                        </select>
+                                <div class="table-responsive">
+                                    <div class="d-flex justify-content-between mb-3 test1">
+                                        <div class="test">
+                                            <label for="dateFilter">Filter by Date:</label>
+                                            <select id="dateFilter" class="form-control">
+                                                <option value="all">All</option>
+                                                <option value="today">Today</option>
+                                                <option value="yesterday">Yesterday</option>
+                                                <option value="week">This Week</option>
+                                                <option value="month">This Month</option>
+                                                <option value="year">This Year</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr No</th>
-                                            <th>Lead ID</th>
-                                            <th>Lead Type</th>
-                                            <th>Prefix</th>
-                                            <th>Name</th>
-                                            <th>Mobile</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                            <th>Date</th>
-                                            <th>Category</th>
-                                            <th>City</th>
-                                            <th>Area</th>
-                                            <th>Branch Area</th>
-                                            <th>DNC Mobile</th>
-                                            <th>DNC Phone</th>
-                                            <th>Company</th>
-                                            <th>Pincode</th>
-                                            <th>Time</th>
-                                            <th>Branch Pin</th>
-                                            <th>Parent ID</th>
-                                            <th>Status</th>
-                                            <th>Plateform</th>
-                                            <th>Action</th>
-                                            <th>Follow Up</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="enquiryTableBody">
-                                        @foreach ($enquiry_list as $enquiry)
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $enquiry->leadid }}</td>
-                                                <td>{{ $enquiry->leadtype }}</td>
-                                                <td>{{ $enquiry->prefix }}</td>
-                                                <td>{{ $enquiry->name }}</td>
-                                                <td>{{ $enquiry->mobile }}</td>
-                                                <td>{{ $enquiry->phone }}</td>
-                                                <td>{{ $enquiry->email }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($enquiry->date)->format('d-m-Y') }}</td>
-                                                <td>{{ $enquiry->category }}</td>
-                                                <td>{{ $enquiry->city }}</td>
-                                                <td>{{ $enquiry->area }}</td>
-                                                <td>{{ $enquiry->brancharea }}</td>
-                                                <td>{{ $enquiry->dncmobile }}</td>
-                                                <td>{{ $enquiry->dncphone }}</td>
-                                                <td>{{ $enquiry->company }}</td>
-                                                <td>{{ $enquiry->pincode }}</td>
-                                                <td>{{ $enquiry->time }}</td>
-                                                <td>{{ $enquiry->branchpin }}</td>
-                                                <td>{{ $enquiry->parentid }}</td>
-                                                <td>{{ $enquiry->status ?? 'Pending' }}</td>
-                                                <td>{{ $enquiry->platform }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#exampleModal" data-enquiry-id="{{ $enquiry->id }}"
-                                                        data-status="{{ $enquiry->latestFollowUp->status ?? 'Pending' }}"
-                                                        data-date="{{ $enquiry->date }}"
-                                                        data-notes="{{ $enquiry->notes }}"
-                                                        data-next-follow-up="{{ $enquiry->latestFollowUp?->next_follow_up ? \Carbon\Carbon::parse($enquiry->latestFollowUp->next_follow_up)->format('Y-m-d\TH:i') : '' }}"
-                                                        data-last-follow-date="{{ $enquiry->latestFollowUp ? \Carbon\Carbon::parse($enquiry->latestFollowUp->date)->format('d-m-Y') : 'N/A' }}"
-                                                        data-last-notes="{{ $enquiry->latestFollowUp ? $enquiry->latestFollowUp->notes : 'N/A' }}">
-                                                        Change Status
-                                                    </button>
-                                                </td>
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('showFollowUps', $enquiry->id) }}"
-                                                        class="btn btn-info">
-                                                        <i class="fas fa-eye"></i>View
-                                                    </a>
-                                                </td>
+                                                <th>Sr No</th>
+                                                <th>Lead ID</th>
+                                                <th>Lead Type</th>
+                                                <th>Prefix</th>
+                                                <th>Name</th>
+                                                <th>Mobile</th>
+                                                <th>Phone</th>
+                                                <th>Email</th>
+                                                <th>Date</th>
+                                                <th>Category</th>
+                                                <th>City</th>
+                                                <th>Area</th>
+                                                <th>Branch Area</th>
+                                                <th>DNC Mobile</th>
+                                                <th>DNC Phone</th>
+                                                <th>Company</th>
+                                                <th>Pincode</th>
+                                                <th>Time</th>
+                                                <th>Branch Pin</th>
+                                                <th>Parent ID</th>
+                                                <th>Status</th>
+                                                <th>Plateform</th>
+                                                <th>Action</th>
+                                                <th>Follow Up</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody id="enquiryTableBody">
+                                            @foreach ($enquiry_list as $enquiry)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $enquiry->leadid }}</td>
+                                                    <td>{{ $enquiry->leadtype }}</td>
+                                                    <td>{{ $enquiry->prefix }}</td>
+                                                    <td>{{ $enquiry->name }}</td>
+                                                    <td>{{ $enquiry->mobile }}</td>
+                                                    <td>{{ $enquiry->phone }}</td>
+                                                    <td>{{ $enquiry->email }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($enquiry->date)->format('d-m-Y') }}</td>
+                                                    <td>{{ $enquiry->category }}</td>
+                                                    <td>{{ $enquiry->city }}</td>
+                                                    <td>{{ $enquiry->area }}</td>
+                                                    <td>{{ $enquiry->brancharea }}</td>
+                                                    <td>{{ $enquiry->dncmobile }}</td>
+                                                    <td>{{ $enquiry->dncphone }}</td>
+                                                    <td>{{ $enquiry->company }}</td>
+                                                    <td>{{ $enquiry->pincode }}</td>
+                                                    <td>{{ $enquiry->time }}</td>
+                                                    <td>{{ $enquiry->branchpin }}</td>
+                                                    <td>{{ $enquiry->parentid }}</td>
+                                                    <td>{{ $enquiry->status ?? 'Pending' }}</td>
+                                                    <td>{{ $enquiry->platform }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#exampleModal"
+                                                            data-enquiry-id="{{ $enquiry->id }}"
+                                                            data-status="{{ $enquiry->latestFollowUp->status ?? 'Pending' }}"
+                                                            data-date="{{ $enquiry->date }}"
+                                                            data-notes="{{ $enquiry->notes }}"
+                                                            data-next-follow-up="{{ $enquiry->latestFollowUp?->next_follow_up ? \Carbon\Carbon::parse($enquiry->latestFollowUp->next_follow_up)->format('Y-m-d\TH:i') : '' }}"
+                                                            data-last-follow-date="{{ $enquiry->latestFollowUp ? \Carbon\Carbon::parse($enquiry->latestFollowUp->date)->format('d-m-Y') : 'N/A' }}"
+                                                            data-last-notes="{{ $enquiry->latestFollowUp ? $enquiry->latestFollowUp->notes : 'N/A' }}">
+                                                            Change Status
+                                                        </button>
+                                                    </td>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('showFollowUps', $enquiry->id) }}"
+                                                            class="btn btn-info">
+                                                            <i class="fas fa-eye"></i>View
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -356,8 +377,8 @@
                 $('#next_follow_up').val(nextFollowUp || '');
             });
 
-             $(document).ready(function() {
-                    // Initialize DataTable
+            $(document).ready(function() {
+                // Initialize DataTable
                 //
                 $('#dateFilter').on('change', function() {
                     let filter = $(this).val();
@@ -370,13 +391,13 @@
                         success: function(data) {
                             console.log('Filtered Data:', data);
                             console.log('Date Filter:', $('#dateFilter').val());
-                            if($('#dateFilter').val() != 'all'){
+                            if ($('#dateFilter').val() != 'all') {
 
-                            const tableBody = document.getElementById('enquiryTableBody');
-                            tableBody.innerHTML = '';
+                                const tableBody = document.getElementById('enquiryTableBody');
+                                tableBody.innerHTML = '';
 
-                            data.forEach((enquiry, index) => {
-                            tableBody.innerHTML += `
+                                data.forEach((enquiry, index) => {
+                                    tableBody.innerHTML += `
                     <tr>
                          <td>${index + 1}</td>
                         <td>${enquiry.leadid || ''}</td>
@@ -403,9 +424,9 @@
                         <td><button class="btn btn-primary">Change Status</button></td>
                         <td><a href="/follow-ups/${enquiry.id}" class="btn btn-info">View</a></td>
                     </tr>`;
-                        });
-                         // Redraw the table with new data
-                    }
+                                });
+                                // Redraw the table with new data
+                            }
                         },
                         error: function(err) {
                             console.error('Error fetching data:', err.responseJSON ?? err);
@@ -415,6 +436,6 @@
 
                 $('#dateFilter').trigger('change');
                 // }
-        });
+            });
         </script>
     @endsection
